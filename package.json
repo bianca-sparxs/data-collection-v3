@@ -1,0 +1,32 @@
+{
+  "name": "The ASL-LEX-data-collection-tool",
+  "version": "0.0.0",
+  "description": "",
+  "main": "app/main.js",
+  "scripts": {
+    "start": "electron .",
+    "postinstall": "electron-builder install-app-deps",
+    "pack": "electron-builder --dir",
+    "dist": "electron-builder"
+  },
+  "build": {
+    "appId": "edu.bu.sail.asllex",
+    "win": {
+      "target": "portable"
+    },
+    "mac": {
+      "target": "dmg"
+    }
+  },
+  "repository": "https://github.com/ASL-LEX/data-collection-v3/",
+  "author": "BU Hariri Institute Software & Application Innovation Lab",
+  "license": "MIT",
+  "devDependencies": {
+    "electron": "~1.8.3",
+    "electron-builder": "^20.28.4",
+    "electron-is-dev": "1.0.1"
+  },
+  "dependencies": {
+    "jquery": "^3.3.1"
+  }
+}
