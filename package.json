@@ -1,5 +1,5 @@
 {
-  "name": "The ASL-LEX-data-collection-tool",
+  "name": "The-ASL-LEX-data-collection-tool",
   "version": "0.0.0",
   "description": "",
   "main": "app/main.js",
@@ -22,7 +22,7 @@
   "author": "BU Hariri Institute Software & Application Innovation Lab",
   "license": "MIT",
   "devDependencies": {
-    "electron": "~1.8.3",
+    "electron": "^7.1.4",
     "electron-builder": "^20.28.4",
     "electron-is-dev": "1.0.1"
   },
