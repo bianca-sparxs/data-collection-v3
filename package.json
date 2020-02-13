@@ -79,8 +79,11 @@
   },
   "dependencies": {
     "@angular/fire": "5.3.0",
+    "@types/jquery": "3.3.32",
     "angularfire2": "5.3.0",
+    "bootstrap": "4.4.1",
     "firebase": "7.6.1",
+    "jquery": "3.4.1",
     "tslint": "5.20.1"
   }
 }

@@ -1,2 +1,21 @@
-<p>dashboard works!</p>
-<p> {{items}}</p>
+<div class="container h-100">
+  <div class="row">
+    <div class="col-8 my-5">
+      <h1>Welcome, {{ (user | async)?.name }}</h1>
+      <div id="signsCompleted">
+        <h5>Signs Completed: {{(user | async)?.completed }} / 200</h5>
+        <div class="progress">
+          <div class="progress-bar" role="progressbar" [style.width]="(((user | async)?.completed)/200)*100 + '%'"></div>
+        </div>
+      </div>
+    </div>
+    <div class="col-3 my-5">
+      <p>Not you? <br> Click <strong>here</strong> to log out.</p>
+    </div>
+  </div>
+  <div class="row mt-5">
+    <div class="col">
+      <h3>Press enter to begin</h3>
+    </div>
+  </div>
+</div>

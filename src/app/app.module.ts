@@ -25,7 +25,7 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
 }
-const firebase = {
+const firebaseConfig = {
   apiKey: "AIzaSyA928ZKSaKCr7ZCBJ8hP9s12VQdsvrQgq0",
   authDomain: "asl-lex.firebaseapp.com",
   databaseURL: "https://asl-lex.firebaseio.com",
@@ -38,7 +38,7 @@ const firebase = {
   declarations: [AppComponent, DashboardComponent],
   imports: [
     BrowserModule,
-    AngularFireModule.initializeApp(firebase),
+    AngularFireModule.initializeApp(firebaseConfig),
     AngularFirestoreModule,
     FormsModule,
     HttpClientModule,

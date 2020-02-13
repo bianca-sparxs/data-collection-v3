@@ -1,7 +1,8 @@
 {
   "PAGES": {
       "HOME": {
-          "TITLE": "App works !"
+          "TITLE": "ASL-LEX 3.0",
+          "SUBTITLE": "Data Collection Tool"
       }
   }
 }

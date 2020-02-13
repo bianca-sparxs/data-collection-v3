@@ -1,9 +1,19 @@
-<div class="container">
-  <h1 class="title">
-    {{ 'PAGES.HOME.TITLE' | translate }}
-    <form>
-      <input id="userId" type="text" name="userId" placeholder="user ID">
-      <input type="submit" [routerLink]="['/dashboard']">
-    </form>
-  </h1>
+<div class="container h-100">
+
+  <div class="row h-100">
+    <div class="col-8 my-auto">
+      <h1 class="title">
+        {{ 'PAGES.HOME.TITLE' | translate }}
+        <br>
+        {{ 'PAGES.HOME.SUBTITLE' | translate}}
+      </h1>
+      <form>
+        <div class="form-group w-50">
+          <label for="userIDInput">Please enter your user ID</label>
+          <input type="email" class="form-control" id="userIDInput" autocomplete="off">
+        </div>
+        <input type="submit" class="btn btn-outline-primary" (click)="this.validateUser()">
+      </form>
+    </div>
+  </div>
 </div>
