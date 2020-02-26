@@ -20,6 +20,9 @@ import { HomeModule } from './home/home.module';
 
 import { AppComponent } from './app.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
+import { RecordSessionComponent } from './record-session/record-session.component';
+import { ViewReferenceComponent } from './view-reference/view-reference.component';
+import { RecordResponseComponent } from './record-response/record-response.component';
 
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
@@ -35,7 +38,7 @@ const firebaseConfig = {
 };
 
 @NgModule({
-  declarations: [AppComponent, DashboardComponent],
+  declarations: [AppComponent, DashboardComponent, RecordSessionComponent, ViewReferenceComponent, RecordResponseComponent],
   imports: [
     BrowserModule,
     AngularFireModule.initializeApp(firebaseConfig),

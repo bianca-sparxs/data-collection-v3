@@ -7,12 +7,18 @@
         <br>
         {{ 'PAGES.HOME.SUBTITLE' | translate}}
       </h1>
-      <form>
+      <form #myForm="ngForm"  (ngSubmit)="login(myForm)">
         <div class="form-group w-50">
           <label for="userIDInput">Please enter your user ID</label>
-          <input type="email" class="form-control" id="userIDInput" autocomplete="off">
+<!--          <input type="email" class="form-control" id="userIDInput" autocomplete="off">-->
+            <select class="form-control" id="userIDInput" [(ngModel)]="selectedName" name="user">
+              <option value="0"></option>
+              <option *ngFor="let user of users | async " [value]="user.name">
+                {{user.name}}
+              </option>
+            </select>
         </div>
-        <input type="submit" class="btn btn-outline-primary" (click)="this.validateUser()">
+        <input type="submit" class="btn btn-outline-primary">
       </form>
     </div>
   </div>
