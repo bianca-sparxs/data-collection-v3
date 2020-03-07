@@ -9,7 +9,7 @@
       </h1>
       <form #myForm="ngForm"  (ngSubmit)="login(myForm)">
         <div class="form-group w-50">
-          <label for="userIDInput">Please enter your user ID</label>
+          <label for="userIDInput">Please select your user ID</label>
 <!--          <input type="email" class="form-control" id="userIDInput" autocomplete="off">-->
             <select class="form-control" id="userIDInput" [(ngModel)]="selectedName" name="user">
               <option value="0"></option>

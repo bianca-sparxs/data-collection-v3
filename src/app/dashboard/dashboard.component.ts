@@ -21,7 +21,8 @@ export class DashboardComponent implements OnInit {
 
   @HostListener('window:keyup', ['$event'])
   keyEvent(event: KeyboardEvent) {
-    if (event.key === " " || event.key === "Spacebar") {
+    console.log(event.key);
+    if (event.key === "Enter") {
       this.router.navigate(['record'])
     }
   }

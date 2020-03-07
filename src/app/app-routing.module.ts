@@ -21,14 +21,19 @@ const routes: Routes = [
     component: RecordSessionComponent,
     children: [
       {
-        path: 'view',
+        path: '',
         component: ViewReferenceComponent
+      },
+      {
+        path: 'view',
+        redirectTo: '',
+        pathMatch: 'full'
       },
       {
         path: 'response',
         component: RecordResponseComponent
       }
-    ]
+    ],
   },
   {
     path: '**',
