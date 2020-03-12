@@ -5,12 +5,17 @@ import {DashboardComponent} from "./dashboard/dashboard.component";
 import {RecordSessionComponent} from "./record-session/record-session.component";
 import {ViewReferenceComponent} from "./view-reference/view-reference.component";
 import {RecordResponseComponent} from "./record-response/record-response.component";
+import {PasswordComponent} from "./password/password.component";
 
 const routes: Routes = [
   {
     path: '',
-    redirectTo: 'home',
+    redirectTo: 'login',
     pathMatch: 'full'
+  },
+  {
+    path: 'password',
+    component: PasswordComponent,
   },
   {
     path: 'dashboard',

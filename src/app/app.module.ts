@@ -17,12 +17,16 @@ import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 
 import { HomeModule } from './home/home.module';
+import { LoginModule } from './login/login.module';
 
 import { AppComponent } from './app.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { RecordSessionComponent } from './record-session/record-session.component';
 import { ViewReferenceComponent } from './view-reference/view-reference.component';
 import { RecordResponseComponent } from './record-response/record-response.component';
+import {LoginComponent} from "./login/login.component";
+import {HomeComponent} from "./home/home.component";
+import {PasswordComponent} from "./password/password.component";
 
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
@@ -38,7 +42,7 @@ const firebaseConfig = {
 };
 
 @NgModule({
-  declarations: [AppComponent, DashboardComponent, RecordSessionComponent, ViewReferenceComponent, RecordResponseComponent],
+  declarations: [AppComponent, HomeComponent, LoginComponent, DashboardComponent, RecordSessionComponent, ViewReferenceComponent, RecordResponseComponent, PasswordComponent],
   imports: [
     BrowserModule,
     AngularFireModule.initializeApp(firebaseConfig),
@@ -48,6 +52,7 @@ const firebaseConfig = {
     CoreModule,
     SharedModule,
     HomeModule,
+    LoginModule,
     AppRoutingModule,
     TranslateModule.forRoot({
       loader: {
