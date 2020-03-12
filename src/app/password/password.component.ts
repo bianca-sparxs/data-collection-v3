@@ -16,10 +16,14 @@ export class PasswordComponent implements OnInit {
   }
 
   //loads user data and navigates to dashboard
-  login(form) {
+  authenticateAdminUser(form) {
+
+    //TODO
+    //1. Grab admin username in previous page
+    //2. Send a call to Firebase to authenticate
+    //3. If successful, provide an option to return back to login (enter username) page with an error message.
     let user = form.value.user;
-    this.db.loadUserData(user);
-    this.router.navigate(['dashboard']).then(nav => {
+    this.router.navigate(['home']).then(nav => {
       console.log(nav);
     }, reason => {
       console.log(reason);

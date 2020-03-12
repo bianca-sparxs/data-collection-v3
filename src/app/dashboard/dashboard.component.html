@@ -3,14 +3,17 @@
     <div class="col-8 my-5">
       <h1>Welcome, {{ (user | async)?.name }}</h1>
       <div id="signsCompleted">
-        <h5>Signs Completed: {{(user | async)?.completed }} / 200</h5>
+<!--        <h5>Signs Completed: {{(user | async)?.completed }} / 200</h5>-->
+        <!--TODO Remove Later when connected to Firbase-->
+        <h5>Signs Completed: 50/ 200</h5>
         <div class="progress">
-          <div class="progress-bar" role="progressbar" [style.width]="(((user | async)?.completed)/200)*100 + '%'"></div>
+<!--          <div class="progress-bar" role="progressbar" [style.width]="(((user | async)?.completed)/200)*100 + '%'"></div>-->
+          <div class="progress-bar" role="progressbar" [style.width]="(50/200)*100 + '%'"></div>
         </div>
       </div>
     </div>
     <div class="col-3 my-5">
-      <p>Not you? <br> Click <a routerLink="/home"><strong>here</strong></a> to log out.</p>
+      <p>Not you? <br> Click <a routerLink="/login"><strong>here</strong></a> to log out.</p>
     </div>
   </div>
   <div class="row mt-5">
