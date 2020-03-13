@@ -3,11 +3,12 @@
     <div class="col-8 my-5">
       <h1>Welcome, {{ (user | async)?.name }}</h1>
       <div id="signsCompleted">
-<!--        <h5>Signs Completed: {{(user | async)?.completed }} / 200</h5>-->
-        <!--TODO Remove Later when connected to Firbase-->
+      <!--<h5>Signs Completed: {{(user | async)?.completed }} / 200</h5>-->
+        <!--TODO Remove Later when connected to Firebase-->
         <h5>Signs Completed: 50/ 200</h5>
         <div class="progress">
-<!--          <div class="progress-bar" role="progressbar" [style.width]="(((user | async)?.completed)/200)*100 + '%'"></div>-->
+          <!--TODO Remove Later when connected to Firebase-->
+          <!--<div class="progress-bar" role="progressbar" [style.width]="(((user | async)?.completed)/200)*100 + '%'"></div>-->
           <div class="progress-bar" role="progressbar" [style.width]="(50/200)*100 + '%'"></div>
         </div>
       </div>
