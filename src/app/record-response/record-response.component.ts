@@ -21,9 +21,9 @@ export class RecordResponseComponent implements OnInit {
 
 
   ngOnInit() {
-    var video = <HTMLVideoElement>document.getElementById('player');
+    let video = <HTMLVideoElement>document.getElementById('player');
 
-    // Get access to the camera!
+    // srGet access to the camera!
     if(navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
       // Not adding `{ audio: true }` since we only want video now
       navigator.mediaDevices.getUserMedia({ video: true }).then(function(stream) {

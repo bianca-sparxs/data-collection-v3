@@ -23,7 +23,7 @@ export class ViewReferenceComponent implements OnInit {
     }
   }
 
-  @HostListener('window:mouseup', ['$event'])
+  @HostListener('window:mousedown', ['$event'])
   keyEvent(event: MouseEvent) {
     this.router.navigate(['record/response'], {skipLocationChange: false});
   }
