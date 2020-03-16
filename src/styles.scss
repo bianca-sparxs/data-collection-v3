@@ -6,7 +6,10 @@ html, body {
 }
 
 #player{
-  width: 100%;
+  width: 23%;
+  margin-left: 39%;
+  padding-right: 2%;
+  float:right;
   height:100%;
 }
 
@@ -17,4 +20,22 @@ html, body {
   position: fixed;
   background-color: black;
   z-index: 100
+}
+
+.top-margin-5{
+  margin-top: 5%;
+}
+
+.top-margin-14{
+  margin-top: 14%;
+}
+
+.margin-all-4{
+  margin: 4%;
+}
+.record{
+  padding-right: 5%;
+}
+.video-iframe{
+  height:83% !important;
 }

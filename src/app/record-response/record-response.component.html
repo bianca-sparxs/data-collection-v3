@@ -1,39 +1,48 @@
 <div>
-  <div class="container fixed-top">
-    <div *ngIf="showRecording; else elseBlock" class="text-right mt-4">
-      <div class="circle animate-flicker"></div>
-      <h2 class="ml-2" style="display: inline">REC</h2>
-    </div>
-    <ng-template #elseBlock>
-      <div class="text-right mt-4">
-        <div class="circle inactive"></div>
-        <h2 class="ml-2" style="display: inline">REC</h2>
-      </div>
-    </ng-template>
-  </div>
-  <div class="container fixed-bottom mb-3">
+  <div class="top-margin-5">
+
     <div class="row">
-      <div class="col-3 pl-0">
-        41/200
-        <div class="progress">
-          <div class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"
-               [style.width]="(50/200)*100 + '%'"></div>
+      <div class="col-12 record">
+        <div *ngIf="showRecording; else elseBlock" class="text-right mt-4">
+          <div class="circle animate-flicker"></div>
+          <h2 class="ml-2" style="display: inline">REC</h2>
         </div>
+        <ng-template #elseBlock>
+          <div class="text-right mt-4">
+            <div class="circle inactive"></div>
+            <h2 class="ml-2" style="display: inline">REC</h2>
+          </div>
+        </ng-template>
       </div>
-      <div class="col-6 text-center">
+    </div>
+
+    <div class="row top-margin-14">
+      <div class="col-12 text-center">
         <div style="display: inline-block" *ngFor="let response of responses; index as i">
           <div [ngClass]="{'in-progress': response.status === 'in-progress',
-                          'completed': currentResponse > i,
-                          'incomplete': response.status === 'incomplete',
-                          'flagged': response.flagged === true}"></div>
-          <button class="btn-outline-danger" *ngIf="currentResponse === 3">X</button>
+                              'completed': currentResponse > i,
+                              'incomplete': response.status === 'incomplete',
+                              'flagged': response.flagged === true}"></div>
+          <button class="btn-outline-danger flag-btn" *ngIf="currentResponse === 3">X</button>
         </div>
       </div>
-      <div id="liveFeed" class="col-3">
-        <div  id="overlay" style=""></div>
-        <video id="player" style="height: 10rem;"></video>
-      </div>
 
+      <div>
+
+        <div class="fixed-bottom mb-3">
+          <div class="fixed-bottom margin-all-4 col-3 pl-0">
+            41/200
+            <div class="progress">
+              <div class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"
+                   [style.width]="(50/200)*100 + '%'"></div>
+            </div>
+          </div>
+
+          <video id="player"></video>
+        </div>
+      </div>
     </div>
+
+
   </div>
 </div>
