@@ -12,8 +12,8 @@
           <label for="userIDInput">Please select your User ID</label>
             <select class="form-control" id="userIDInput" [(ngModel)]="selectedName" name="user">
               <option value="0"></option>
-              <option *ngFor="let user of users | async " [value]="user.name">
-                {{user.name}}
+              <option *ngFor="let user of users | async " [value]="user.id">
+                {{user.id}}
               </option>
             </select>
         </div>

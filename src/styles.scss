@@ -5,12 +5,26 @@ html, body {
   height: 100%;
 }
 
-#player{
+#video-content {
   width: 23%;
-  margin-left: 39%;
-  padding-right: 2%;
+  margin-right: 2%;
   float:right;
   height:100%;
+  background-color: black;
+}
+#video-content video {
+  width: 100%;
+  display: block;
+}
+
+#video-content:before {
+  content: "";
+  background: black;
+  opacity: 60%;
+  position: absolute;
+  top: 0;
+  width: inherit;
+  height: 100%;
 }
 
 #overlay {

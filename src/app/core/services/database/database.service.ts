@@ -2,11 +2,14 @@ import {Injectable} from '@angular/core';
 import {AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument} from "@angular/fire/firestore";
 import {Observable} from "rxjs";
 import 'firebase/firestore';
+import {map} from "rxjs/operators";
 
 export interface User {
   name: string;
   completed: number;
 }
+
+export interface UserId extends  User {id: string}
 
 @Injectable({
   providedIn: 'root'
@@ -14,7 +17,7 @@ export interface User {
 export class DatabaseService {
 
   private usersCollection: AngularFirestoreCollection<User>;
-  private users: Observable<User[]>;
+  private users: Observable<UserId[]>;
 
   private userDoc: AngularFirestoreDocument<User>;
   private user: Observable<User>;
@@ -23,7 +26,15 @@ export class DatabaseService {
     this.usersCollection = this.afs.collection<User>('users', ref => {
       return ref;
     });
-    this.users = this.usersCollection.valueChanges();
+
+    this.users = this.usersCollection.snapshotChanges().pipe(
+      map(actions => actions.map(a => {
+        const data = a.payload.doc.data() as User;
+        const id = a.payload.doc.id;
+        // console.log({id, ...data});
+        return {id, ...data};
+      }))
+    )
   }
 
   getUser() {
@@ -34,19 +45,16 @@ export class DatabaseService {
     return this.users;
   }
 
-  validateUser(username) {
-    if (!username) {
-      alert("Please input a username"); // placeholder
-    }
-    // return the promise from firebase when attempting to get docSnapshot
-    return this.afs.firestore.doc('/users/' + username).get();
-  }
-
-  loadUserData(username) {
-    // let queryRef = this.afs.collection('users', ref => ref.where('name', '==', username));
-    // console.log(queryRef);
-    this.userDoc = this.afs.doc('users/' + username);
-    this.user = this.userDoc.valueChanges();
+  loadUserData(userId) {
+    console.log(this.users);
+    this.userDoc = this.afs.doc('users/' + userId);
+    this.user = this.userDoc.snapshotChanges().pipe(
+      map(a => {
+          const data = a.payload.data() as User;
+          const id = a.payload.id;
+          console.log({id, ...data});
+          return {id, ...data};
+      }));
   }
 
   createUser(username) {

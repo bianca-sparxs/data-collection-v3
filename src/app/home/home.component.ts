@@ -18,6 +18,7 @@ export class HomeComponent implements OnInit {
   //loads user data and navigates to dashboard
   login(form) {
     let user = form.value.user;
+    console.log(this.selectedName);
     this.db.loadUserData(user);
     this.router.navigate(['dashboard']).then(nav => {
       console.log(nav);
