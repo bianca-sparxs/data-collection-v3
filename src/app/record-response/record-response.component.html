@@ -5,12 +5,12 @@
       <div class="col-12 record">
         <div *ngIf="showRecording; else elseBlock" class="text-right mt-4">
           <div class="circle animate-flicker"></div>
-          <h2 class="ml-2" style="display: inline">REC</h2>
+          <h1 class="ml-2" style="display: inline">REC</h1>
         </div>
         <ng-template #elseBlock>
           <div class="text-right mt-4">
             <div class="circle inactive"></div>
-            <h2 class="ml-2" style="display: inline">REC</h2>
+            <h1 class="ml-2" style="display: inline">REC</h1>
           </div>
         </ng-template>
       </div>
@@ -19,7 +19,7 @@
     <div class="row top-margin-14">
       <div class="col-12 text-center">
         <div style="display: inline-block" *ngFor="let response of responses; index as i">
-          <div [ngClass]="{'in-progress': response.status === 'in-progress',
+          <div [ngClass]="{'in-progress animate-flicker': response.status === 'in-progress',
                               'completed': currentResponse > i,
                               'incomplete': response.status === 'incomplete',
                               'flagged': response.flagged === true}"></div>
