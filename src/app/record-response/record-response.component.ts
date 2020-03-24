@@ -49,15 +49,6 @@ export class RecordResponseComponent implements OnInit {
         this.showRecording = false;
         this.stopRecording();
 
-        // For debugging
-        // const recordedVideo = document.querySelector('video#recorded');
-        // const superBuffer = new Blob(this.recordedChunks, {type: 'video/webm'});
-        // recordedVideo.src = null;
-        // recordedVideo.srcObject = null;
-        // recordedVideo.src = window.URL.createObjectURL(superBuffer);
-        // recordedVideo.controls = true;
-        // recordedVideo.play()
-
       } else {
           this.router.navigate(['record/view'], {skipLocationChange: false});
           return;
@@ -67,20 +58,22 @@ export class RecordResponseComponent implements OnInit {
   //mouse up to start recording
   @HostListener('window:mouseup', ['$event'])
   upEvent(event: MouseEvent) {
-    console.log("up event");
     if (event.button === 0) {
 
       if (this.currentResponse < 3) {
         this.responses[this.currentResponse].status = "in-progress";
         this.showRecording = true;
-        this.startRecording();
+        // if (this.currentResponse === 2) {
+          this.startRecording();
+        // }
+
       }
 
       if (this.currentResponse === 3) {
         this.downloadVideo(this.currentResponse);
       }
       // check to see if finished recording third response
-      console.log(this.currentResponse);
+      // console.log(this.currentResponse);
     }
   }
 
@@ -114,22 +107,24 @@ export class RecordResponseComponent implements OnInit {
 
       try {
         this.mediaRecorder = new MediaRecorder(window['stream'], options);
+        this.recordedChunks = [];
         console.log("MediaRecorder created", this.recordedChunks);
       } catch (e) {
         console.error('Exception while creating MediaRecorder:', e);
       }
 
       this.mediaRecorder.onstop = (event) => {
-        console.log("Recorded blobs:", this.recordedChunks);
+        console.log("Recorded chunks:", this.recordedChunks);
       };
       this.mediaRecorder.ondataavailable = this.handleDataAvailable.bind(this);
 
     }
-    this.mediaRecorder.start();
+    this.mediaRecorder.start(10);
     console.log("MediaRecorder started");
   }
 
   handleDataAvailable(event) {
+    console.log("data available", event.data);
     if (event.data && event.data.size > 0) {
       this.recordedChunks.push(event.data);
     }
@@ -141,7 +136,7 @@ export class RecordResponseComponent implements OnInit {
 
   downloadVideo(videoName) {
     const blob = new Blob(this.recordedChunks, {type: 'video/webm'});
-    console.log(`Saving ${JSON.stringify({ videoName, size: blob.size })}`);
+    // console.log(`Saving ${JSON.stringify({ videoName, size: blob.size })}`);
     const self = this;
 
     if (this.electronService.isElectron) {
@@ -158,17 +153,19 @@ export class RecordResponseComponent implements OnInit {
       };
       reader.readAsArrayBuffer(blob);
     } else {
-      const url = window.URL.createObjectURL(blob);
-      const a = document.createElement('a');
-      a.style.display = 'none';
-      a.href = url;
-      a.download = videoName + ".webm";
-      document.body.appendChild(a);
-      a.click();
-      setTimeout(() => {
-        document.body.removeChild(a);
-        window.URL.revokeObjectURL(url);
-      }, 100);
+      for (let i = 0; i < this.recordedChunks.length; i++) {
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.style.display = 'none';
+        a.href = url;
+        a.download = i + ".webm";
+        document.body.appendChild(a);
+        a.click();
+        setTimeout(() => {
+          document.body.removeChild(a);
+          window.URL.revokeObjectURL(url);
+        }, 100);
+      }
     }
   }
 }
