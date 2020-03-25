@@ -53,3 +53,8 @@ html, body {
 .video-iframe{
   height:83% !important;
 }
+
+#userVideo {
+  -webkit-transform: scaleX(-1);
+  transform: scaleX(-1);
+}

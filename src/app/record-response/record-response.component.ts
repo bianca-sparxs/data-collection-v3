@@ -28,7 +28,7 @@ export class RecordResponseComponent implements OnInit {
 
 
   ngOnInit() {
-    let video = <HTMLVideoElement>document.getElementById('player');
+    let video = <HTMLVideoElement>document.getElementById('userVideo');
 
     // srGet access to the camera!
     if(navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
@@ -143,7 +143,7 @@ export class RecordResponseComponent implements OnInit {
     // console.log(`Saving ${JSON.stringify({ videoName, size: blob.size })}`);
     const self = this;
 
-    // if (this.electronService.isElectron) {
+    if (this.electronService.isElectron) {
       let reader = new FileReader();
       reader.readAsArrayBuffer(blobData);
       reader.onload = function () {
@@ -156,21 +156,19 @@ export class RecordResponseComponent implements OnInit {
           }
         })
       };
-    // }
-    /*else {
-      for (let i = 0; i < this.recordedChunks.length; i++) {
-        const url = window.URL.createObjectURL(blob);
-        const a = document.createElement('a');
-        a.style.display = 'none';
-        a.href = url;
-        a.download = i + ".webm";
-        document.body.appendChild(a);
-        a.click();
-        setTimeout(() => {
-          document.body.removeChild(a);
-          window.URL.revokeObjectURL(url);
-        }, 100);
-      }
-    }*/
+    }
+    else {
+      const url = window.URL.createObjectURL(blobData);
+      const a = document.createElement('a');
+      a.style.display = 'none';
+      a.href = url;
+      a.download = videoName + ".webm";
+      document.body.appendChild(a);
+      a.click();
+      setTimeout(() => {
+        document.body.removeChild(a);
+        window.URL.revokeObjectURL(url);
+      }, 100);
+    }
   }
 }
