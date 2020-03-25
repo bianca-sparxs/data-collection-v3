@@ -33,14 +33,42 @@ export class RecordResponseComponent implements OnInit {
     // srGet access to the camera!
     if(navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
       // Not adding `{ audio: true }` since we only want video now
+      let self = this;
       navigator.mediaDevices.getUserMedia({ video: true }).then(function(stream) {
         window['stream'] = stream;
         video.srcObject = stream;
         video.play();
+
+        self.initializeMediaRecorder();
       });
     }
   }
 
+  initializeMediaRecorder() {
+    let options;
+
+    if (MediaRecorder.isTypeSupported('video/webm;codecs=vp9')) {
+      options = {mimeType: 'video/webm; codecs=vp9'};
+    } else if (MediaRecorder.isTypeSupported('video/webm;codecs=vp8')) {
+      options = {mimeType: 'video/webm; codecs=vp8'};
+    } else {
+      console.log("Cannot instantiate mediaRecorder");
+    }
+
+    try {
+      this.mediaRecorder = new MediaRecorder(window['stream'], options);
+      this.recordedChunks = [];
+      console.log("MediaRecorder created", this.recordedChunks);
+    } catch (e) {
+      console.error('Exception while creating MediaRecorder:', e);
+    }
+
+    this.mediaRecorder.onstop = (event) => {
+      console.log("Recorded chunks:", this.recordedChunks);
+    };
+    this.mediaRecorder.ondataavailable = this.handleDataAvailable.bind(this);
+    this.startRecording();
+  }
   @HostListener('window:mousedown', ['$event'])
     downEvent(event: MouseEvent) {
       if (event.button === 0 && this.currentResponse < 3) {
@@ -70,7 +98,9 @@ export class RecordResponseComponent implements OnInit {
       }
 
       if (this.currentResponse === 3) {
-        this.downloadVideo(this.currentResponse);
+        for (let i = 0; i < 3; i++) {
+          this.downloadVideo("response" + i, this.recordedChunks[i]);
+        }
       }
       // check to see if finished recording third response
       // console.log(this.currentResponse);
@@ -93,33 +123,7 @@ export class RecordResponseComponent implements OnInit {
 
   // Methods for recording user video
   startRecording() {
-
-    let options;
-
-    if (!this.mediaRecorder) {
-      if (MediaRecorder.isTypeSupported('video/webm;codecs=vp9')) {
-        options = {mimeType: 'video/webm; codecs=vp9'};
-      } else if (MediaRecorder.isTypeSupported('video/webm;codecs=vp8')) {
-        options = {mimeType: 'video/webm; codecs=vp8'};
-      } else {
-        console.log("Cannot instantiate mediaRecorder");
-      }
-
-      try {
-        this.mediaRecorder = new MediaRecorder(window['stream'], options);
-        this.recordedChunks = [];
-        console.log("MediaRecorder created", this.recordedChunks);
-      } catch (e) {
-        console.error('Exception while creating MediaRecorder:', e);
-      }
-
-      this.mediaRecorder.onstop = (event) => {
-        console.log("Recorded chunks:", this.recordedChunks);
-      };
-      this.mediaRecorder.ondataavailable = this.handleDataAvailable.bind(this);
-
-    }
-    this.mediaRecorder.start(10);
+    this.mediaRecorder.start();
     console.log("MediaRecorder started");
   }
 
@@ -134,25 +138,26 @@ export class RecordResponseComponent implements OnInit {
     this.mediaRecorder.stop();
   }
 
-  downloadVideo(videoName) {
-    const blob = new Blob(this.recordedChunks, {type: 'video/webm'});
+  downloadVideo(videoName, blobData) {
+    // const blob = new Blob(this.recordedChunks, {type: 'video/webm'});
     // console.log(`Saving ${JSON.stringify({ videoName, size: blob.size })}`);
     const self = this;
 
-    if (this.electronService.isElectron) {
+    // if (this.electronService.isElectron) {
       let reader = new FileReader();
+      reader.readAsArrayBuffer(blobData);
       reader.onload = function () {
-        let buffer = new Buffer(reader.result as string);
+        let data = new Buffer(reader.result as string);
         let path = self.electronService.remote.app.getPath("desktop") + "/" + videoName + ".webm";
-        self.electronService.fs.writeFile(path, buffer, {}, (err) => {
+        self.electronService.fs.writeFile(path, data, {}, (err) => {
           if (err) {
             console.error(err);
             return;
           }
         })
       };
-      reader.readAsArrayBuffer(blob);
-    } else {
+    // }
+    /*else {
       for (let i = 0; i < this.recordedChunks.length; i++) {
         const url = window.URL.createObjectURL(blob);
         const a = document.createElement('a');
@@ -166,6 +171,6 @@ export class RecordResponseComponent implements OnInit {
           window.URL.revokeObjectURL(url);
         }, 100);
       }
-    }
+    }*/
   }
 }
